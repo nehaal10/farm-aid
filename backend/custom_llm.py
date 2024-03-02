@@ -6,8 +6,7 @@ from pinecone import Pinecone
 from langchain_community.llms.openai import OpenAI
 import os
 
-OPENAI_API_KEY="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"
-PINECONE_API_KEY="f342e959-7272-4a04-a0ef-6b8257f392c0"
+
 os.environ['PINECONE_API_KEY'] = PINECONE_API_KEY
 
 # load the pdf
