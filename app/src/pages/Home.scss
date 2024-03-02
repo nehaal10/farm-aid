@@ -1,0 +1,104 @@
+/* Color Theme Swatches in Hex */
+$Poseidon-1-hex: #012030;
+$Poseidon-2-hex: #13678A;
+$Poseidon-3-hex: #45C4B0;
+$Poseidon-4-hex: #9AEBA3;
+$Poseidon-5-hex: #DAFDBA;
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.home-container{
+    display: flex;
+    flex-direction: column;
+    background-color: $Poseidon-5-hex;
+    width: 100%;
+    // height: 100%;
+    height: 90vh;
+    justify-content: center;
+    align-items: center;
+
+    .chat-container{
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        // background-color: blue;
+
+        .messages-container{
+            width: 100%;
+            height: 85%;
+            border-radius: 20px;
+            background-color: $Poseidon-2-hex;
+            padding: 10px;
+            margin: 10px 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            // background-color: blue;
+            // overflow-y: scroll;
+            // &::-webkit-scrollbar {
+            //     display: none;
+            // }
+
+            .message-space{
+                // background-color: red;
+                border-radius: 20px;
+                transition: height 1s ease-in-out;
+                // padding: 10px;
+                display: flex;
+                flex-direction: column;
+                overflow-y: scroll;
+                scroll-behavior: smooth;
+                
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+        }
+        
+        .user-control{
+            align-self: center;
+            display: flex;
+            background-color: $Poseidon-2-hex;
+            border-radius: 20px;
+            margin:10px;
+            width: 100%;
+            height: 10%;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 10px;
+
+            .delete-messages,.send-message{
+                width: 50px;
+                font-size: 25px;
+                aspect-ratio: 1/1;
+                background-color: $Poseidon-1-hex;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .message-box{
+                width: 70%;
+                display: flex;
+                justify-content: center;
+
+                input{
+                    padding: 10px 20px;
+                    outline: none;
+                    width: 100%;
+                    border: none;
+                    font-size: 20px;
+                    background-color: white;
+                    color: black;
+                    border-radius: 20px;
+                }
+            }
+        }
+    }
+}
