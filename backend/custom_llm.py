@@ -1,36 +1,29 @@
-from langchain_community.llms import llamacpp
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from llama_index import vector_stores, SimpleDirectoryReader, ServiceContext
-from llama_index.prompts.prompts import SimpleInputPrompt
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.document_loaders.unstructured import UnstructuredFileLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain.vectorstores.chroma import Chroma
+from langchain.llms.openai import OpenAI
+from langchain.chains.question_answering import load_qa_chain
+from dotenv import load_dotenv
+import os
 
-llm = llamacpp(
-    model_path = "model/llama-2-7b-chat.ggmlv3.q8_0.bin", verbose = True
-)
+# insert open ai key
 
+file = "data/farmerbook.pdf"
+loader = UnstructuredFileLoader(file)
+documents = loader.load()
 
+spliter = RecursiveCharacterTextSplitter(chunk_size=500,chunk_overlap=50)
+data = spliter.split_documents(documents)
 
-documents = SimpleDirectoryReader("./documents").load_data()
+# embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
 
+vectorestore = Chroma.from_documents(data,embeddings)
 
-system_prompt = "You are a Q&A assistant. Your goal is to answer questions as accurately as possible based on the question and context provided."
-query_wrapper_prompt = SimpleInputPrompt("<|USER|>{query_str}<|ASSISTANT|>")
+# llm = OpenAI(temperature = 0 , open_api_key=OPENAI_API_KEY)
+chain = load_qa_chain(llm, chain_type="stuff")
 
-embeded_model = LangchainEmbedding(
-  HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-)
+query = "whats the ideal distance between mango trees"
+docs = vectorestore.similarity_search(query)
 
-service_context = ServiceContext.from_defaults(
-    chunk_size=1024,
-    llm=llm,
-    embed_model=embeded_model
-)
-
-index = vector_stores.FaissVectorStore.from_documents(documents, service_context=service_context)
-
-engine = index.as_query_engine()
-response = engine.query("what should be the distance from one mongo tree to another")
-
-print(response)
-
-
-
+chain.run(input_documents=docs, question=query)
