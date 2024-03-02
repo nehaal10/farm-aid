@@ -1,0 +1,99 @@
+$hex5: #733232;
+$hex1: #A67968;
+
+/* Color Theme Swatches in Hex */
+$Poseidon-1-hex: #012030;
+$Poseidon-2-hex: #13678A;
+$Poseidon-3-hex: #45C4B0;
+$Poseidon-4-hex: #9AEBA3;
+$Poseidon-5-hex: #DAFDBA;
+
+
+@font-face{
+    font-family: 'Auge-Trial';
+    src: url('../static/Auge-Trial-Bold.otf')
+        format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.navbar{
+    display: flex;
+    background-color: $Poseidon-1-hex;
+    // padding: 10px;
+    border-bottom: 1px solid #ffffff50;
+    justify-content: space-between;
+    padding: 10px 50px;
+    align-items: center;
+    // border: 1px solid red;
+    width: 100%;
+    .navbar-logo{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        // background-color: red;
+        font-weight: 600;
+        font-size: 2.2rem;
+        font-family: 'Gilroy';
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        // border: 1px solid red;
+    }
+    .navbar-search{
+        input{
+            padding: 5px;
+            text-align: center;
+            border-radius: 5px;
+            border: none;
+            background-color: $hex1;
+            color: black;
+            transition: .2s ease-in-out;
+
+            &:focus{
+                border: none;
+                outline: none;
+                transform: scale(1.1);
+                box-shadow: 0px 5px 10px #111111aa, 1px 0px 10px #111111aa;
+            }
+
+            &::placeholder{
+                color: #333;
+            }
+        }
+    }
+
+    .navbar-icons{
+        display: flex;
+        list-style: none;
+        gap: 10px;
+        // border: 1px solid red;
+        li{
+            padding: 0 10px;
+            font-size: 20px;
+            a{
+                color: white;
+                :hover{
+                    color: #ddd;
+                }
+            }
+        }
+        li:nth-Child(1){
+            position: relative;
+            span{
+                position: absolute;
+                bottom: 0;
+                left: 70%;
+                padding: 1px 5px;
+                border-radius: 10px;
+                margin: 0 auto;
+                background-color: black;
+                font-size: 12px;
+                font-weight: 600;
+            }
+        }
+    }
+}
