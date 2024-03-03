@@ -3,10 +3,12 @@ from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
-from langchain_community.llms.openai import OpenAI
+from langchain_openai import OpenAI
+from langchain.chains.question_answering import load_qa_chain
 import os
 
-
+OPENAI_API_KEY=""
+PINECONE_API_KEY=""
 os.environ['PINECONE_API_KEY'] = PINECONE_API_KEY
 
 # load the pdf
@@ -37,18 +39,10 @@ embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
 index_name="langchain3"
 docsearch = PineconeVectorStore.from_documents(data, embeddings, index_name=index_name)
 
-query = "What did the president say about Ketanji Brown Jackson"
+
+llm=OpenAI(temperature=0,openai_api_key=OPENAI_API_KEY)
+chain=load_qa_chain(llm,chain_type="stuff")
+query = " What do we know at the end of the session"
 docs = docsearch.similarity_search(query)
-print(docs)
 
-
-
-# vectorestore = Chroma.from_documents(data,embeddings)
-
-# llm = OpenAI(temperature = 0 , open_api_key=OPENAI_API_KEY)
-# chain = load_qa_chain(llm, chain_type="stuff")
-
-# query = "whats the ideal distance between mango trees"
-# docs = vectorestore.similarity_search(query)
-
-# chain.run(input_documents=docs, question=query)
+print(chain.invoke({"question": query, "input_documents": docs})['output_text'])
